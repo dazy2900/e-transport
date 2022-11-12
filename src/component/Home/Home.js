@@ -29,6 +29,41 @@ const Home = () => {
     setInputs((values) => ({ ...values, [name]: value }))
   }
 
+  const TopLocation = (e) => {
+    const id = e.target.id
+    if (id == 'LagosToAbuja') {
+      let location = {
+        departure: 'Lagos',
+        destination: 'Abuja',
+        date: '',
+        passengers: '1',
+      }
+      setCookie('input', location, { path: '/' })
+    } else if (id == 'LagosToIbadan') {
+      let location = {
+        departure: 'Lagos',
+        destination: 'Ibadan',
+        date: '',
+        passengers: '1',
+      }
+      setCookie('input', location, { path: '/' })
+    } else if (id == 'AbkToLagos') {
+      let location = {
+        departure: 'Abeokuta',
+        destination: 'Lagos',
+        date: '',
+        passengers: '1',
+      }
+      setCookie('input', location, { path: '/' })
+    }
+    //console.log(inputs)
+
+    console.log(cookies.input)
+    setCookie('page_to_load', 'Passenger', { path: '/' })
+
+    window.location.href = '/dashboard'
+  }
+
   const submit_handler = (e) => {
     e.preventDefault()
     console.log(inputs)
@@ -56,6 +91,7 @@ const Home = () => {
                   className="banner-button btn btn-primary mt-3"
                   onClick={() => {
                     window.location.href = '/dashboard'
+                    setCookie('page_to_load', 'Driver', { path: '/' })
                   }}
                 >
                   Publish a Ride
@@ -180,7 +216,11 @@ const Home = () => {
           <div className="row container destination-container center mt-3">
             <div className="col-sm-4 mb-2 ">
               <div className="destination row ">
-                <div className="location col-10 ">
+                <div
+                  id="LagosToAbuja"
+                  onClick={TopLocation}
+                  className="location col-10 "
+                >
                   Lagos <BsArrowRightShort size={25} /> Abuja
                 </div>
                 <div className="pointer col-2 ">></div>
@@ -188,7 +228,11 @@ const Home = () => {
             </div>
             <div className="col-sm-4 mb-2 ">
               <div className="destination row">
-                <div className="location col-10">
+                <div
+                  id="LagosToIbadan"
+                  onClick={TopLocation}
+                  className="location col-10"
+                >
                   Lagos <BsArrowRightShort size={25} /> Ibadon
                 </div>
                 <div className="pointer col-2">></div>
@@ -196,7 +240,11 @@ const Home = () => {
             </div>
             <div className="col-sm-4 mb-2 ">
               <div className="destination row">
-                <div className="location col-10 ">
+                <div
+                  id="AbkToLagos"
+                  onClick={TopLocation}
+                  className="location col-10 "
+                >
                   Lagos <BsArrowRightShort size={25} /> Abeokuta
                 </div>
                 <div className="pointer col-2 ">></div>
@@ -224,6 +272,8 @@ const Home = () => {
                   <button
                     className="button btn btn-lg btn-primary"
                     onClick={() => {
+                      setCookie('page_to_load', 'Driver', { path: '/' })
+
                       window.location.href = '/dashboard'
                     }}
                   >

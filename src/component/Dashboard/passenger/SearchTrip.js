@@ -18,7 +18,7 @@ const SearchTrips = () => {
     'page_to_load',
     'input',
   ])
-
+  const imageURL = 'http://localhost/Travelbro/'
   const baseURL = 'http://localhost/Travelbro/api.php'
   useEffect(() => {
     if (cookies.input) {
@@ -69,6 +69,7 @@ const SearchTrips = () => {
       setPost(search_data)
       //alert(post)
       console.log(post)
+      setCookie('input', inputs, { path: '/' })
 
       //const json_data = JSON.parse(post)
       //alert(json_data.departure)
@@ -77,7 +78,7 @@ const SearchTrips = () => {
   }
   const JoinTrip = (e) => {
     const id = e.target.id
-    const user = cookies.get('user')
+    const user = cookies.user
     //alert(user)
 
     const datas = {
@@ -131,7 +132,6 @@ const SearchTrips = () => {
                   placeholder="Date"
                   value={inputs.date}
                   onChange={change_handler}
-                  required
                 />
               </div>
               <div className="col-4">
@@ -179,7 +179,10 @@ const SearchTrips = () => {
               </tr>
 
               <tr className="middle-row">
-                <td></td>
+                <td>
+                  <div className="">{data1.driver_name}</div>
+                  <div className="">{data1.driver_tel}</div>
+                </td>
                 <td className="arrow-icon ">
                   <HiOutlineArrowNarrowDown size={45} />
                 </td>
@@ -187,8 +190,13 @@ const SearchTrips = () => {
                 <td></td>
               </tr>
 
-              <tr>
-                <td className="dp ">dp</td>
+              <tr className="">
+                <td className="dp">
+                  <img
+                    className="dp-image"
+                    src={imageURL + data1.profile_picture}
+                  />
+                </td>
                 <td className="pb-4 destination ">{data1.destination}</td>
                 <td className="seats ">
                   <MdOutlinePersonOutline size={40} />
@@ -197,7 +205,7 @@ const SearchTrips = () => {
                 <td className="button ">
                   <BsCreditCardFill
                     className="center delete-icon"
-                    id={data1.my_trip_id}
+                    id={data1.trip_id}
                     onClick={JoinTrip}
                     color="#0695e8"
                     size={45}

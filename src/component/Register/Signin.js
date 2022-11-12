@@ -44,13 +44,17 @@ const Signup = () => {
       console.log(response.data)
       //alert(post)
       const status = response.data.status
-      const type = response.data.type
+      const UserInfo = response.data.user_info[0]
+      const type = response.data.user_info[0].user_status
       console.log(status)
       console.log(type)
+      console.log(UserInfo)
       if (status == 'logged_in') {
         window.location.href = '/dashboard'
         setCookie('user', inputs.email, { path: '/' })
         setCookie('page_to_load', type, { path: '/' })
+        setCookie('status', type, { path: '/' })
+        setCookie('UserInfo', UserInfo, { path: '/' })
 
         //alert(cookies.user)
       } else {

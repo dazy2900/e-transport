@@ -19,6 +19,7 @@
     "react-animate-on-scroll": "^2.1.5",
     "react-bootstrap": "^2.5.0",
     "react-cookie": "^4.1.1",
+    "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-facebook-login": "^4.1.1",
     "react-icons": "^4.4.0",

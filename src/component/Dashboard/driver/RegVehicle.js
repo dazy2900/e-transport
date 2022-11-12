@@ -2,39 +2,48 @@ import './driver.scss'
 import { useState, useEffect } from 'react'
 import Form from 'react-bootstrap/Form'
 import axios from 'axios'
-import { Cookies } from 'react-cookie'
-
-const cookies = new Cookies()
+import { useCookies } from 'react-cookie'
 
 const RegVehicle = () => {
   const [inputs, setInputs] = useState('')
-  const [post, setPost] = useState('')
+  const [file, setFile] = useState('')
+  const [cookies, setCookie] = useCookies(['user', 'status'])
 
-  const baseURL = 'http://localhost/Travelbro/api.php'
+  const baseURL = 'http://localhost/Travelbro/UploadApi.php'
 
   const change_handler = (e) => {
     const name = e.target.name
     const value = e.target.value
     setInputs((values) => ({ ...values, [name]: value }))
   }
+
+  const file_handler = (e) => {
+    const fileImg = e.target.files[0]
+    setFile(fileImg)
+  }
+
   const submit_handler = (e) => {
     e.preventDefault()
     console.log(inputs)
     //alert('done')
-    const user = cookies.get('user')
-    const datas = {
-      request: 'reg_vehicle',
-      data: inputs,
-      user: user,
+    const formData = new FormData()
+
+    const user = cookies.user
+    formData.append('user', user)
+    formData.append('reg_vehicle', user)
+
+    formData.append('image', file, file.name)
+
+    for (var key in inputs) {
+      formData.append(key, inputs[key])
+    }
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1])
     }
 
-    const new_data = JSON.stringify(datas)
-    //const new_data2 = JSON.parse(new_data)
-
-    axios.post(baseURL, new_data).then((response) => {
-      setPost(response.data)
+    axios.post(baseURL, formData).then((response1) => {
+      console.log(response1.data)
       alert('Vehicle Registered')
-      //alert(JSON.parse(new_data))
     })
   }
   return (
@@ -52,7 +61,7 @@ const RegVehicle = () => {
                       name="vehicle-picture"
                       type="file"
                       value={inputs.vehicle_picture}
-                      onChange={change_handler}
+                      onChange={file_handler}
                       accept="image/png, image/gif, image/jpeg, image/jpg"
                     />
                   </Form.Group>

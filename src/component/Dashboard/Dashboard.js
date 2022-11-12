@@ -10,14 +10,16 @@ import Signin from './../Register/Signin'
 import { useCookies } from 'react-cookie'
 import CompleteSignup from './driver/Modal'
 
-const baseURL = 'http://localhost/emart/test.php'
+const baseURL = 'http://localhost/Travelbro/api.php'
+const imageURL = 'http://localhost/Travelbro/'
 
 const Dashboard = () => {
-  const [post, setPost] = useState(null)
+  const [post, setPost] = useState('')
   const [cookies, setCookie, removeCookie] = useCookies([
     'user',
     'status',
     'page_to_load',
+    'UserInfo',
   ])
   const [CurrentPage, setCurrentPage] = useState({
     PageLoad: cookies.page_to_load,
@@ -47,7 +49,7 @@ const Dashboard = () => {
     }
   }, [cookies])
   const CompleteSign = () => {
-    if (CurrentPage.PageLoad == Driver && cookies.status == 'passenger') {
+    if (CurrentPage.PageLoad == Driver && cookies.status == 'Passenger') {
       return <CompleteSignup />
     }
   }
@@ -78,13 +80,17 @@ const Dashboard = () => {
     <div className="my-container1 dashboard-section">
       <div className="flex-container">
         <div className="menu-container border-outline-danger">
-          <div className="profile-pic-div">
-            <div className="profile-icon icon">
-              <CgProfile size={90} />
+          <div className="profile-pic-div center">
+            <div className="profile-icon profile-pic icon">
+              <img
+                src={imageURL + cookies.UserInfo.profile_picture}
+                alt={<CgProfile size={90} />}
+                className="profile-pic"
+              />
             </div>
-            profile-picture
+            <div className="">{cookies.UserInfo.name}</div>
           </div>
-          <div className="menu-div ">
+          <div className="menu-div">
             <div className="passenger-div" id="Passenger" onClick={pageLoader}>
               <div className="passenger-icon icon">
                 <IoIosPeople size={30} />

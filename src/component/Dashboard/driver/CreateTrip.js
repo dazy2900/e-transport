@@ -22,6 +22,7 @@ const CreateTrip = () => {
     const value = e.target.value
     setInputs((values) => ({ ...values, [name]: value }))
   }
+
   const ViewVehicle = () => {
     const user = cookies.get('user')
     const datas = {

@@ -11,7 +11,7 @@ import { useCookies } from 'react-cookie'
 const Driver = () => {
   const [selected, setSelected] = useState(false)
   const [CurrentSection, setCurrentSection] = useState({
-    SectionLoad: CreateTrip,
+    SectionLoad: RegVehicle,
   })
   const [cookies, setCookie, removeCookie] = useCookies([
     'user',
@@ -63,19 +63,6 @@ const Driver = () => {
           <li class="nav-item">
             <button
               class={
-                CurrentSection.SectionLoad == CreateTrip
-                  ? 'nav-link active'
-                  : 'nav-link'
-              }
-              id="CreateTrip"
-              onClick={SectionLoader}
-            >
-              Create Trip
-            </button>
-          </li>
-          <li class="nav-item">
-            <button
-              class={
                 CurrentSection.SectionLoad == RegVehicle
                   ? 'nav-link active'
                   : 'nav-link'
@@ -84,6 +71,19 @@ const Driver = () => {
               onClick={SectionLoader}
             >
               Register Vehicle
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class={
+                CurrentSection.SectionLoad == CreateTrip
+                  ? 'nav-link active'
+                  : 'nav-link'
+              }
+              id="CreateTrip"
+              onClick={SectionLoader}
+            >
+              Create Trip
             </button>
           </li>
           <li class="nav-item">

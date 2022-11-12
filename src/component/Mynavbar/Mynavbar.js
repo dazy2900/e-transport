@@ -9,10 +9,17 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import { Link } from 'react-router-dom'
 import navbarimg from '../../images/travelbro-blue-nav.png'
 import { MdOutlinePersonOutline } from 'react-icons/md'
+import { useCookies } from 'react-cookie'
 
 import './Mynavbar.scss'
 
 const Mynavbar = () => {
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'user',
+    'status',
+    'page_to_load',
+    'input',
+  ])
   return (
     <>
       {['md'].map((expand) => (
@@ -45,6 +52,15 @@ const Mynavbar = () => {
                   </Nav.Link>
                   <Nav.Link as={Link} to={'/about '}>
                     About
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    to={'/dashboard '}
+                    onClick={() => {
+                      setCookie('page_to_load', 'Driver', { path: '/' })
+                    }}
+                  >
+                    Publish a Ride
                   </Nav.Link>
                   <NavDropdown
                     title={<MdOutlinePersonOutline size={25} color="#8a8888" />}

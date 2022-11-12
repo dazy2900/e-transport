@@ -13,6 +13,7 @@ import CreateTrip from './component/Dashboard/driver/CreateTrip'
 import SearchTrip from './component/Dashboard/passenger/SearchTrip'
 import PassengerTrip from './component/Dashboard/passenger/PassengerTrips'
 import Payment from './component/Dashboard/passenger/payment'
+import Admin from './component/Admin/Admin'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="searchtrip" element={<SearchTrip />} />
             <Route path="passengertrip" element={<PassengerTrip />} />
             <Route path="payment" element={<Payment />} />
+            <Route path="admin" element={<Admin />} />
           </Route>
         </Routes>
       </Router>

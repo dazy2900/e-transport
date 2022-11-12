@@ -10,9 +10,11 @@ import { useCookies } from 'react-cookie'
 const Signup = () => {
   const [inputs, setInputs] = useState('')
   const [post, setPost] = useState('')
+  const [file, setFile] = useState('')
+
   const [cookies, setCookie] = useCookies(['user', 'status'])
 
-  const baseURL = 'http://localhost/Travelbro/api.php'
+  const baseURL = 'http://localhost/Travelbro/UploadApi.php'
   useEffect(() => {}, [])
 
   const change_handler = (e) => {
@@ -20,33 +22,55 @@ const Signup = () => {
     const value = e.target.value
     setInputs((values) => ({ ...values, [name]: value }))
   }
+  const file_handler = (e) => {
+    const fileImg = e.target.files[0]
+    setFile(fileImg)
+  }
   const submit_handler = (e) => {
     e.preventDefault()
+    //console.log(file)
+    //const filed = e.target['image'].files[0]
     console.log(inputs)
-    //alert('done')
+    const formData = new FormData()
     const datas = {
       request: 'signup',
       data: inputs,
     }
-
     const new_data = JSON.stringify(datas)
-    //const new_data2 = JSON.parse(new_data)
+    formData.append('image', file, file.name)
+    formData.append('signup', inputs)
+    for (var key in inputs) {
+      formData.append(key, inputs[key])
+    }
+    //console.log(formData.get('image').name)
+    //console.log(file.name)
 
-    axios.post(baseURL, new_data).then((response) => {
-      const status = response.data.status
-      setPost(status)
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1])
+    }
+
+    axios.post(baseURL, formData).then((response1) => {
+      console.log(response1.data)
+      const status = response1.data.status
       console.log(status)
-      alert(status)
 
-      //alert(cookies.user)
       if (status == 'signed_up') {
         window.location.href = '/dashboard'
         setCookie('user', inputs.email, { path: '/' })
-        setCookie('status', 'passenger', { path: '/' })
+        setCookie('page_to_load', 'Passenger', { path: '/' })
+        setCookie('status', 'Passenger', { path: '/' })
+        setCookie('UserInfo', inputs, { path: '/' })
+
+        //alert(cookies.user)
       } else {
         // alert('not yet')
       }
     })
+    /*axios.post(baseURL, new_data).then((response) => {  
+      const status = response.data.status
+      
+     
+    })*/
   }
 
   return (
@@ -69,10 +93,9 @@ const Signup = () => {
                   <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label>Upload a display picture</Form.Label>
                     <Form.Control
-                      name="profile-picture"
                       type="file"
-                      value={inputs.profile}
-                      onChange={change_handler}
+                      value={file.image}
+                      onChange={file_handler}
                       accept="image/png, image/gif, image/jpeg, image/jpg"
                     />
                   </Form.Group>
