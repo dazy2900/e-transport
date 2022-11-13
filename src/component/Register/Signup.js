@@ -60,8 +60,6 @@ const Signup = () => {
         setCookie('page_to_load', 'Passenger', { path: '/' })
         setCookie('status', 'Passenger', { path: '/' })
         setCookie('UserInfo', inputs, { path: '/' })
-
-        //alert(cookies.user)
       } else {
         // alert('not yet')
       }
